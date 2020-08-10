@@ -1,6 +1,6 @@
 !.gitignore
-/build/**
-/install/**
+!/build/**
+install/**
 *.swp
 *.tmp
 *.lo
