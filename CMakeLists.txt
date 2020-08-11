@@ -55,10 +55,9 @@ ExternalProject_Add(hypre_external
    )
 
 
-set(EXPORT_INTERFACE_CUDA_LIBS "${PROJECT_SOURCE_DIR}/install/lib/libhypre.a")
+set(EXPORT_INTERFACE_LIBS "${PROJECT_SOURCE_DIR}/install/lib/libhypre.a")
 add_library(hypre INTERFACE IMPORTED GLOBAL)
-list(APPEND EXPORT_INTERFACE_CUDA_LIBS libcusparse_static.a)
-target_link_libraries(hypre INTERFACE "${EXPORT_INTERFACE_CUDA_LIBS}")
+target_link_libraries(hypre INTERFACE "${EXPORT_INTERFACE_LIBS}")
 target_include_directories(hypre INTERFACE "${PROJECT_SOURCE_DIR}/install/include")
 
 
