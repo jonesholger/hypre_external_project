@@ -12,6 +12,11 @@ else()
   cmake_policy(VERSION 3.16)
 endif()
 
+cmake_policy(SET CMP0022 NEW)
+#cmake_policy(SET CMP0025 NEW)
+#cmake_policy(SET CMP0048 NEW)
+#cmake_policy(SET CMP0057 NEW)
+
 include(ExternalProject)
 
 
@@ -25,7 +30,7 @@ project (hypre_external_project
   VERSION ${HYPRE_VERSION}
   LANGUAGES NONE)
 
-set (HYPRE_ROOT  "${PROJECT_SOURCE_DIR}/build/Source/hypre/src")
+set (HYPRE_ROOT  "${PROJECT_SOURCE_DIR}/build/Source/hypre_external/src")
 
 set(CC_s "CC=mpicc")
 set(CXX_s "CXX=mpiCC")
@@ -39,7 +44,7 @@ set(command ${conf} ${prefix} ${libdir} ${includedir} ${CC_s} ${CXX_s})
 message(STATUS "command = ${command}")
 set_directory_properties(PROPERTIES EP_BASE ${PROJECT_SOURCE_DIR}/build)
 
-ExternalProject_Add(hypre
+ExternalProject_Add(hypre_external
    GIT_REPOSITORY "git@github.com:hypre-space/hypre.git"
    GIT_TAG "60212ab6f3fba66dbe5481904d2f17fe62dab242"
    UPDATE_COMMAND ""
@@ -50,5 +55,17 @@ ExternalProject_Add(hypre
    )
 
 
+set(EXPORT_INTERFACE_CUDA_LIBS "${PROJECT_SOURCE_DIR}/install/lib/libhypre.a")
+add_library(hypre INTERFACE IMPORTED GLOBAL)
+list(APPEND EXPORT_INTERFACE_CUDA_LIBS libcusparse_static.a)
+target_link_libraries(hypre INTERFACE "${EXPORT_INTERFACE_CUDA_LIBS}")
+target_include_directories(hypre INTERFACE "${PROJECT_SOURCE_DIR}/install/include")
+
+
+export (TARGETS hypre
+   FILE "${PROJECT_SOURCE_DIR}/install/cmake/HYPRETargets.cmake"
+   NAMESPACE HYPRE::
+   EXPORT_LINK_INTERFACE_LIBRARIES
+  )
 
 
