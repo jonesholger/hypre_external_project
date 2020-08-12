@@ -42,6 +42,7 @@ set(includedir "--includedir=${PROJECT_SOURCE_DIR}/install/include")
 
 list(APPEND EXPAND_OPTIONS "")
 list(APPEND EXPORT_INTERFACE_LIBS "${PROJECT_SOURCE_DIR}/install/lib/libhypre.a")
+list(APPEND EXPORT_INCLUDES "${PROJECT_SOURCE_DIR}/install/include")
 
 include(cmake/SetupOptions.cmake)
 include(cmake/ExpandBaseOptions.cmake)
@@ -64,7 +65,7 @@ ExternalProject_Add(hypre_external
 
 add_library(hypre INTERFACE IMPORTED GLOBAL)
 target_link_libraries(hypre INTERFACE "${EXPORT_INTERFACE_LIBS}")
-target_include_directories(hypre INTERFACE "${PROJECT_SOURCE_DIR}/install/include")
+target_include_directories(hypre INTERFACE "${EXPORT_INCLUDES}")
 
 
 export (TARGETS hypre

@@ -15,7 +15,11 @@ if(HYPRE_WITH_CUDA)
       list(APPEND EXPAND_OPTIONS "--enable-unified-memory")
    endif()
 
+   # set includes
+   list(APPEND EXPORT_INCLUDES ${CUDA_INCLUDE_DIRS})
+
    # set other cuda libs for interface export here
+   list(APPEND EXPORT_INTERFACE_LIBS ${CUDA_LIBRARIES})
    if(NOT HYPRE_SHARED)
       list(APPEND EXPORT_INTERFACE_LIBS ${CUDA_TOOLKIT_ROOT_DIR}/lib64/libculibos.a)
    endif ()
