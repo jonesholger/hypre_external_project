@@ -32,17 +32,20 @@ project (hypre_external_project
 
 set (HYPRE_ROOT  "${PROJECT_SOURCE_DIR}/build/Source/hypre_external/src")
 
+#Todo use mpicc only when using mpi
 set(CC_s "CC=mpicc")
 set(CXX_s "CXX=mpiCC")
 set(conf "${HYPRE_ROOT}/configure")
 set(prefix "--prefix=${HYPRE_ROOT}")
 set(libdir "--libdir=${PROJECT_SOURCE_DIR}/install/lib")
 set(includedir "--includedir=${PROJECT_SOURCE_DIR}/install/include")
+
 list(APPEND EXPAND_OPTIONS "")
+list(APPEND EXPORT_INTERFACE_LIBS "${PROJECT_SOURCE_DIR}/install/lib/libhypre.a")
 
-set(EXPORT_INTERFACE_LIBS "${PROJECT_SOURCE_DIR}/install/lib/libhypre.a")
-
-include(cmake/CMakeBasics.cmake)
+include(cmake/SetupOptions.cmake)
+include(cmake/ExpandBaseOptions.cmake)
+include(cmake/ExpandCudaOptions.cmake)
 
 set(command ${conf} ${prefix} ${libdir} ${includedir} ${EXPAND_OPTIONS} ${CC_s} ${CXX_s})
 
@@ -58,8 +61,6 @@ ExternalProject_Add(hypre_external
    CONFIGURE_COMMAND ${command}
    BUILD_COMMAND make -j 
    )
-
-
 
 add_library(hypre INTERFACE IMPORTED GLOBAL)
 target_link_libraries(hypre INTERFACE "${EXPORT_INTERFACE_LIBS}")

@@ -6,17 +6,10 @@ option(HYPRE_ENABLE_MIXEDINT         "Use long long int for HYPRE_BigInt, int fo
 option(HYPRE_ENABLE_SINGLE           "Use float for HYPRE_Real" OFF)
 option(HYPRE_ENABLE_LONG_DOUBLE      "Use long double for HYPRE_Real" OFF)
 option(HYPRE_ENABLE_COMPLEX          "Use complex values" OFF)
-option(HYPRE_ENABLE_HYPRE_BLAS       "Use internal BLAS library" ON)
-option(HYPRE_ENABLE_HYPRE_LAPACK     "Use internal LAPACK library" ON)
 option(HYPRE_ENABLE_PERSISTENT_COMM  "Use persistent communication" OFF)
 option(HYPRE_ENABLE_GLOBAL_PARTITION "Use global partitioning" OFF)
-option(HYPRE_ENABLE_FEI              "Use FEI" OFF)
-option(HYPRE_WITH_MPI                "Compile with MPI" ON)
-option(HYPRE_WITH_OPENMP             "Use OpenMP" OFF)
 option(HYPRE_WITH_CUDA               "Use CUDA" OFF)
 option(HYPRE_WITH_HOPSCOTCH          "Use hopscotch hashing with OpenMP" OFF)
-option(HYPRE_WITH_DSUPERLU           "Use TPL SuperLU_Dist" OFF)
-option(HYPRE_WITH_CALIPER            "Use Caliper" OFF) 
 option(HYPRE_PRINT_ERRORS            "Print HYPRE errors" OFF)
 option(HYPRE_TIMING                  "Use HYPRE timing routines" OFF)
 option(HYPRE_BUILD_EXAMPLES          "Build examples" OFF)
@@ -32,11 +25,25 @@ option(HYPRE_USING_CUBLAS            "Use cuBlas library" OFF)
 option(HYPRE_USING_CURAND            "Use cuRand library" ON)
 option(HYPRE_USING_GPU_AWARE_MPI     "Use gpu aware mpi" OFF)
 
-#Performance Portability
+# MPI 
+# Default sets CC=mpicc and CXX=mpiCC
+# TODO Process with other MPI related flags
+option(HYPRE_WITH_MPI                "Compile with MPI" ON)
+
+# Performance Portability
+option(HYPRE_WITH_OPENMP             "Use OpenMP" OFF)
 option(HYPRE_USING_RAJA              "Use RAJA portability layer" OFF)
 option(HYPRE_USING_KOKKOS            "Use Kokkos portability layer" OFF)
 
+# Optional Packages
+# if BLAS and LAPACK are not internal find them
+option(HYPRE_ENABLE_HYPRE_BLAS       "Use internal BLAS library" ON)
+option(HYPRE_ENABLE_HYPRE_LAPACK     "Use internal LAPACK library" ON)
+option(HYPRE_ENABLE_FEI              "Use FEI" OFF)
+option(HYPRE_WITH_DSUPERLU           "Use TPL SuperLU_Dist" OFF)
+option(HYPRE_WITH_CALIPER            "Use Caliper" OFF) 
 
-
+#Todo fortran and fmangle options
+#Todo maxdim option
 
 
