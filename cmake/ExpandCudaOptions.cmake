@@ -1,12 +1,13 @@
 if(HYPRE_WITH_CUDA)
    enable_language(CUDA)
-   find_package(CUDA REQUIRED) # deprecated but allows us to stop if not found
+   find_package(CUDA REQUIRED) #  allows us to error out if not found
 
    cuda_select_nvcc_arch_flags(ARCH_FLAGS)
 
-   # To do extract 70 from code=sm_70 from ARCH
-
+   # Extract SM version from ARCH
+   string(REGEX MATCH [0123456789]+ SM_VERSION "${ARCH_FLAGS}" )
    message(STATUS "ARCH: ${ARCH_FLAGS}")
+   message(STATUS "Extracted SM Version: ${SM_VERSION}")
 
    list(APPEND EXPAND_OPTIONS "--with-cuda")
 
@@ -55,6 +56,5 @@ if(HYPRE_WITH_CUDA)
       list(APPEND EXPAND_OPTIONS "--enable-gpu-aware-mpi")
    endif()   
 
-   # for now add hard coded SM
-   list(APPEND EXPAND_OPTIONS "HYPRE_CUDA_SM=70")
+   list(APPEND EXPAND_OPTIONS "HYPRE_CUDA_SM=${SM_VERSION}")
 endif()
