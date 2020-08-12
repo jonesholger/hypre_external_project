@@ -56,6 +56,5 @@ if(HYPRE_WITH_CUDA)
       list(APPEND EXPAND_OPTIONS "--enable-gpu-aware-mpi")
    endif()   
 
-   # for now add hard coded SM
    list(APPEND EXPAND_OPTIONS "HYPRE_CUDA_SM=${SM_VERSION}")
 endif()
