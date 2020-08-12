@@ -47,6 +47,7 @@ list(APPEND EXPORT_INCLUDES "${PROJECT_SOURCE_DIR}/install/include")
 include(cmake/SetupOptions.cmake)
 include(cmake/ExpandBaseOptions.cmake)
 include(cmake/ExpandCudaOptions.cmake)
+include(cmake/ExpandPackageOptions.cmake)
 
 set(command ${conf} ${prefix} ${libdir} ${includedir} ${EXPAND_OPTIONS} ${CC_s} ${CXX_s})
 
@@ -63,6 +64,8 @@ ExternalProject_Add(hypre_external
    BUILD_COMMAND make -j 
    )
 
+list(REMOVE_DUPLICATES EXPORT_INTERFACE_LIBS)
+list(REMOVE_DUPLICATES EXPORT_INCLUDES)
 add_library(hypre INTERFACE IMPORTED GLOBAL)
 target_link_libraries(hypre INTERFACE "${EXPORT_INTERFACE_LIBS}")
 target_include_directories(hypre INTERFACE "${EXPORT_INCLUDES}")
