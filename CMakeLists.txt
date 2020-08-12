@@ -28,7 +28,7 @@ set (HYPRE_BUGS    hypre-support@llnl.gov)
 
 project (hypre_external_project
   VERSION ${HYPRE_VERSION}
-  LANGUAGES NONE)
+  LANGUAGES C CXX)
 
 set (HYPRE_ROOT  "${PROJECT_SOURCE_DIR}/build/Source/hypre_external/src")
 
@@ -38,8 +38,13 @@ set(conf "${HYPRE_ROOT}/configure")
 set(prefix "--prefix=${HYPRE_ROOT}")
 set(libdir "--libdir=${PROJECT_SOURCE_DIR}/install/lib")
 set(includedir "--includedir=${PROJECT_SOURCE_DIR}/install/include")
+list(APPEND EXPAND_OPTIONS "")
 
-set(command ${conf} ${prefix} ${libdir} ${includedir} ${CC_s} ${CXX_s})
+set(EXPORT_INTERFACE_LIBS "${PROJECT_SOURCE_DIR}/install/lib/libhypre.a")
+
+include(cmake/CMakeBasics.cmake)
+
+set(command ${conf} ${prefix} ${libdir} ${includedir} ${EXPAND_OPTIONS} ${CC_s} ${CXX_s})
 
 message(STATUS "command = ${command}")
 set_directory_properties(PROPERTIES EP_BASE ${PROJECT_SOURCE_DIR}/build)
@@ -55,7 +60,7 @@ ExternalProject_Add(hypre_external
    )
 
 
-set(EXPORT_INTERFACE_LIBS "${PROJECT_SOURCE_DIR}/install/lib/libhypre.a")
+
 add_library(hypre INTERFACE IMPORTED GLOBAL)
 target_link_libraries(hypre INTERFACE "${EXPORT_INTERFACE_LIBS}")
 target_include_directories(hypre INTERFACE "${PROJECT_SOURCE_DIR}/install/include")
