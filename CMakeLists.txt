@@ -54,9 +54,12 @@ set(command ${conf} ${prefix} ${libdir} ${includedir} ${EXPAND_OPTIONS} ${CC_s} 
 message(STATUS "command = ${command}")
 set_directory_properties(PROPERTIES EP_BASE ${PROJECT_SOURCE_DIR}/build)
 
+
+#   GIT_TAG "60212ab6f3fba66dbe5481904d2f17fe62dab242"  v2.19.0
+
 ExternalProject_Add(hypre_external
    GIT_REPOSITORY "git@github.com:hypre-space/hypre.git"
-   GIT_TAG "60212ab6f3fba66dbe5481904d2f17fe62dab242"
+   GIT_TAG "3b22847deb3431416604b3b3a3645cd987c2eda9"
    UPDATE_COMMAND ""
    PATCH_COMMAND ""
    BINARY_DIR ${HYPRE_ROOT} 
